@@ -21,12 +21,26 @@ func main() {
 	fmt.Println(sum)
 	sum1 := addrighttoleft(arr)
 	fmt.Println(sum1)
-
 	absSumandSum1 := abs(sum, sum1)
-
 	fmt.Println(absSumandSum1)
 
+	//==============================================================
+	sumFromLeft, sumFromRight := addLefttoRightANDop(arr)
+	fmt.Println(sumFromLeft, sumFromRight)
+
 }
+
+func addLefttoRightANDop(ar [3][3]int) (int, int) {
+	sumFromLeft := 0
+	sumFromRight := 0
+	for i := 0; i < len(ar); i++ {
+		sumFromLeft += ar[i][i]
+		sumFromRight += ar[len(ar)-1-i][i]
+	}
+	return sumFromLeft, sumFromRight
+}
+
+//=====================================================
 func addlefttoright(ar [3][3]int) int {
 	sum := 0
 	for i := 0; i < len(ar); i++ {
