@@ -1,8 +1,10 @@
 package main
 
-import "net/http"
-
-import "fmt"
+import (
+	"fmt"
+	"net/http"
+	"time"
+)
 
 func main() {
 
@@ -17,8 +19,13 @@ func main() {
 
 	for _, link := range links {
 		go checklink(link, c)
-		fmt.Println(<-c)
 
+	}
+	for l := range c {
+		go func(link string) {
+			time.Sleep(5 * time.Second)
+			checklink(link, c)
+		}(l)
 	}
 
 }
@@ -28,9 +35,9 @@ func checklink(link string, c chan string) {
 
 	if err != nil {
 		fmt.Println(link, "might be down")
-		c <- "Might be down"
+		c <- link
 		return
 	}
 	fmt.Println(link, "is up")
-	c <- "Yep is up"
+	c <- link
 }
